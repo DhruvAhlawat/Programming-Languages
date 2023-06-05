@@ -1,0 +1,6 @@
+[submodule "Markdown-to-HTML-converter"]
+	path = Markdown-to-HTML-converter
+	url = https://github.com/DhruvAhlawat/Markdown-to-HTML-converter.git
+[submodule "Compiler_For_PL0-Language"]
+	path = Compiler_For_PL0-Language
+	url = https://github.com/DhruvAhlawat/Compiler_For_PL0-Language.git
