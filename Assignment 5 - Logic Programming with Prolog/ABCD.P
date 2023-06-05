@@ -1,0 +1,59 @@
+
+%alice can only paddle alone. Bob can only paddle when he's with Carol
+
+member(X, [X|_]).
+member(X, [H|T]) :- member(X, T). %H \= X, 
+
+memberCount([], _, A,A).
+memberCount([B|T],B,Acc,Cnt) :- !, Acc1 is Acc + 1, memberCount(T, B, Acc1, Cnt).
+memberCount([H|T], B, Acc, Cnt) :- !, H \= B, memberCount(T, B, Acc, Cnt).
+
+%the below predicate is an accumulator type predicate that is used to delete particular 
+%elements from a list. It also reverses the rest but that is fine for the current use.
+shift(X, [X|T], Y, R) :- shift(X, T, Y, R ).
+shift(X, [H|T], Y, R) :- H \= X, shift(X, T, [H |Y], R).
+shift(_, [], Y, Y). 
+
+remove2(X, Y, [H | T], Acc, R) :- H \= X, H \= Y, remove2(X, Y, T, [H | Acc], R).
+remove2(X, Y, [X | T], Acc, R) :- remove2(X, Y, T, Acc, R).
+remove2(X, Y, [Y | T], Acc, R) :- remove2(X, Y, T, Acc, R).
+remove2(_, _, [], Acc, Acc).
+
+updateRSide(X, L, R) :- shift(X, L, [], R).
+updateLSide(X, Y, L, NewL) :- remove2(X, Y, L, [], NewL).
+goingRight(X) :- 0 is mod(X, 2).
+
+%we have alice, bob, carol and davis. but I also added a 'none' person to signify going alone
+canPaddle(carol, _). %the first person is the paddler, the second is the passenger
+canPaddle(davis, _).
+canPaddle(alice,none). %she can only paddle when nobody is with her.
+canPaddle(bob,carol). 
+canPaddle(bob,none). %bob can only paddle when he's with carol or if he's alone.
+
+checkEqual(X,Y) :- dif(X,Y).
+
+printList([]).
+printList([H|T]) :- write(H), write(" "), printList(T).
+
+travellerPrint([]).
+travellerPrint([H|T]) :- printList(H),write('\n') ,travellerPrint(T).
+
+double(X, Y, [H | T]) :- (memberCount(Y, H, 0, 2), X = H); double(X, Y, T).
+
+solve([], _, 5, P, Travellers) :-  
+     member(alice,P), member(bob,P), member(carol,P), member(davis,P),       
+     !, travellerPrint(Travellers), double(X, P, [alice, bob, carol, davis]), 
+     write('The one who paddled twice: '), write(X). %ends on this case. let the last one be the list of paddlers.
+
+solve(L, R, N, P, Travellers) :-
+     (goingRight(N), dif(X,Y) ,member(X,L), member(Y,L), canPaddle(X,Y), append(P,[X],NewP), 
+     updateLSide(X,Y,L,NewL), append(R,[X,Y],NewR), NewN is N+1,append(Travellers, [[X,Y]], NewT),
+     solve(NewL, NewR, NewN, NewP, NewT));
+
+     %the below handles movement from right to left. first we choose a paddler and move them from right to left.
+     (not(goingRight(N)), member(X,R), append(P,[X],NewP), updateRSide(X,R,NewR), NewN is N+1, append(L,[X],NewL), append(Travellers, [[X]], NewT), solve(NewL, NewR, NewN, NewP, NewT)).
+     
+abcd :- solve([alice, bob, carol, davis], [], 0, [], []).
+
+?- abcd. %calls the predicate to run the program.
+%outputs 6 solutions, in all of which, Carol is the one who paddles twice.

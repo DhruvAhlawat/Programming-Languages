@@ -1,0 +1,27 @@
+%assumed that we can add a + or a - before a number as well (unary +, unary -).
+
+printVals(+(0,B)) :- write(B).
+printVals(+(A,B)) :- (A \= 0)  , (printVals(A), write(+B)).
+printVals(-(0,B)) :- write(-), write(B).
+printVals(-(A,B)) :- (A \= 0)  , (printVals(A), write(-), write(B)).
+
+
+%write(L1=L2)
+equate([],L1,[],L2) :- L1 =:= L2, printVals(L1),write(=),printVals(L2).
+equate([A | T], L1, B, L2) :- equate(T, L1+A, B, L2); equate(T, L1-A, B, L2). %the two possible cases.
+equate([],L1, [B | T], L2) :- equate([], L1, T, L2+B); equate([], L1, T, L2-B). %the two possible cases.
+    
+%equate([A | T], L1, GenL1, B, L2, GenL2) :- (append(GenL1,[+,A],res1), equate(T, L1 + A, res1, B, L2, GenL2));(append(GenL1,[-,A],res1),equate(T, L1 - A, res1, B, L2, GenL2)). %the two possible cases. equate([],L1,GenL1, B, L2, GenL2) :- (append(GenL2,[+,B],res2) , equate([], L1, GenL1, B, L2, res2)); equate([], L1, GenL1, B, L2, GenL2 - B). %the two possible cases.
+
+canEqual(A,B) :- equate(A,0,B,0).
+
+checkAllCombos(A, [H | T]) :- (T=[_|_])  ,append(A, [H], X), (canEqual(X,T); checkAllCombos(X,T)).
+%the T=[_|_] condition ensures that there is atleast one element in the tail, and atleast one element on both sides of the =
+
+arith(L) :- checkAllCombos([],L).
+%this is the final function that needs to be called to run the program. 
+%It takes in a list of numbers
+
+%example usage - (Commented to not mess with autograder if used.)
+
+% ?- arith([2,3,4,6,9]).

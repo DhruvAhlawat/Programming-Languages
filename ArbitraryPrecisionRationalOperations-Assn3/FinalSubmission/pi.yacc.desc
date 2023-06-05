@@ -1,0 +1,290 @@
+
+state 0:
+
+	START : . EXP 
+	START : . SHOWDECIMAL EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+	SHOWDECIMAL	shift 2
+
+	EXP	goto 1
+	START	goto 17
+
+	.	error
+
+
+state 1:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+	START : EXP .  (reduce by rule 0)
+
+	DIV	shift 9
+	MUL	shift 8
+	ADD	shift 7
+	SUB	shift 6
+	EOL	reduce by rule 0
+	EOF	reduce by rule 0
+
+
+	.	error
+
+
+state 2:
+
+	START : SHOWDECIMAL . EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 10
+
+	.	error
+
+
+state 3:
+
+	EXP : DECI .  (reduce by rule 3)
+
+	RPAREN	reduce by rule 3
+	DIV	reduce by rule 3
+	MUL	reduce by rule 3
+	ADD	reduce by rule 3
+	SUB	reduce by rule 3
+	EOL	reduce by rule 3
+	EOF	reduce by rule 3
+
+
+	.	error
+
+
+state 4:
+
+	EXP : NUMBA .  (reduce by rule 2)
+
+	RPAREN	reduce by rule 2
+	DIV	reduce by rule 2
+	MUL	reduce by rule 2
+	ADD	reduce by rule 2
+	SUB	reduce by rule 2
+	EOL	reduce by rule 2
+	EOF	reduce by rule 2
+
+
+	.	error
+
+
+state 5:
+
+	EXP : LPAREN . EXP RPAREN 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 11
+
+	.	error
+
+
+state 6:
+
+	EXP : EXP SUB . EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 12
+
+	.	error
+
+
+state 7:
+
+	EXP : EXP ADD . EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 13
+
+	.	error
+
+
+state 8:
+
+	EXP : EXP MUL . EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 14
+
+	.	error
+
+
+state 9:
+
+	EXP : EXP DIV . EXP 
+
+	LPAREN	shift 5
+	NUMBA	shift 4
+	DECI	shift 3
+
+	EXP	goto 15
+
+	.	error
+
+
+state 10:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+	START : SHOWDECIMAL EXP .  (reduce by rule 1)
+
+	DIV	shift 9
+	MUL	shift 8
+	ADD	shift 7
+	SUB	shift 6
+	EOL	reduce by rule 1
+	EOF	reduce by rule 1
+
+
+	.	error
+
+
+state 11:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+	EXP : LPAREN EXP . RPAREN 
+
+	RPAREN	shift 16
+	DIV	shift 9
+	MUL	shift 8
+	ADD	shift 7
+	SUB	shift 6
+
+
+	.	error
+
+
+state 12:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+	EXP : EXP SUB EXP .  (reduce by rule 7)
+
+	RPAREN	reduce by rule 7
+	DIV	shift 9
+	MUL	shift 8
+	ADD	reduce by rule 7
+	SUB	reduce by rule 7
+	EOL	reduce by rule 7
+	EOF	reduce by rule 7
+
+
+	.	error
+
+
+state 13:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP ADD EXP .  (reduce by rule 4)
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+
+	RPAREN	reduce by rule 4
+	DIV	shift 9
+	MUL	shift 8
+	ADD	reduce by rule 4
+	SUB	reduce by rule 4
+	EOL	reduce by rule 4
+	EOF	reduce by rule 4
+
+
+	.	error
+
+
+state 14:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP MUL EXP .  (reduce by rule 5)
+	EXP : EXP . DIV EXP 
+	EXP : EXP . SUB EXP 
+
+	RPAREN	reduce by rule 5
+	DIV	reduce by rule 5
+	MUL	reduce by rule 5
+	ADD	reduce by rule 5
+	SUB	reduce by rule 5
+	EOL	reduce by rule 5
+	EOF	reduce by rule 5
+
+
+	.	error
+
+
+state 15:
+
+	EXP : EXP . ADD EXP 
+	EXP : EXP . MUL EXP 
+	EXP : EXP . DIV EXP 
+	EXP : EXP DIV EXP .  (reduce by rule 6)
+	EXP : EXP . SUB EXP 
+
+	RPAREN	reduce by rule 6
+	DIV	reduce by rule 6
+	MUL	reduce by rule 6
+	ADD	reduce by rule 6
+	SUB	reduce by rule 6
+	EOL	reduce by rule 6
+	EOF	reduce by rule 6
+
+
+	.	error
+
+
+state 16:
+
+	EXP : LPAREN EXP RPAREN .  (reduce by rule 8)
+
+	RPAREN	reduce by rule 8
+	DIV	reduce by rule 8
+	MUL	reduce by rule 8
+	ADD	reduce by rule 8
+	SUB	reduce by rule 8
+	EOL	reduce by rule 8
+	EOF	reduce by rule 8
+
+
+	.	error
+
+
+state 17:
+
+
+	EOL	accept
+	EOF	accept
+
+
+	.	error
+
+75 of 108 action table entries left after compaction
+8 goto table entries

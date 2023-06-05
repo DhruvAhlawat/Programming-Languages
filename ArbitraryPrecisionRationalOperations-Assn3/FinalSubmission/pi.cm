@@ -1,0 +1,12 @@
+(*taken from User's guide to ML-lex and ML-yacc*)
+Library
+    structure Pi
+is
+    rational.sml
+    pi.lex
+    pi.yacc:MLyacc
+    glue.sml
+    Compiler.sml
+    $/basis.cm (* SML/NJ’s Basis Library. *)
+    $/ml-yacc-lib.cm 
+    $smlnj/compiler/compiler.cm (* Structure Compiler. *)

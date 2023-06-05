@@ -1,0 +1,4 @@
+%gotta make the subsequence predicate to find subsequences.
+subsequence([],_).
+subsequence([H1|T1],[H2|T2]) :- (H1 = H2, subsequence(T1,T2)) ; subsequence([H1 | T1], T2).
+

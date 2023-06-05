@@ -1,0 +1,2 @@
+Skeleton 5
+ae"PiLrValsFun"i2aä¢Token"gp1c"TOKEN"f±ÿjh2aä¢ParserData"h7aä¢Header"è0aä¢LrTable"gp2ÿÿ	Caÿgpÿ&båçð±ÿ	f6d"List"Cd"Array"d"Char"ÿ	d"String"d"General"Nbåçð±ÿ=d2f1ä¢Rational"aä¢MlyValue"ÿad"EC"h2ÿ$bÿ‚æ±ÿ‚2ad"Actions"h2bÿ‚f4ÿ	ÿ‚2ÿ‚&d"BigInt"ÿƒNaä¢Tokens"jÿçð±ã¢Pi_TOKENS"h2aÿ-gp1c"PARSER_DATA"aÿƒ>ÿ„

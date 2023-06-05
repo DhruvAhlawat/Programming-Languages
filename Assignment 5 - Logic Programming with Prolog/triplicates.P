@@ -1,0 +1,13 @@
+memberCount([], _, A,A).
+memberCount([B|T], B, Acc, Cnt) :- Acc1 is Acc + 1, memberCount(T, B, Acc1, Cnt).
+memberCount([H|T], B, Acc, Cnt) :- H \= B, memberCount(T, B, Acc, Cnt).
+
+%counts the number of appearances of a member in  a list.
+%the second argument is the member we are counting. 
+%the third is accumulator while the fourth is the final result. This way of counting is effecient due to tail recursion.
+
+has_no_triplicates([]).
+has_no_triplicates([H|T]) :- memberCount([H|T],H,0,X), X < 3,  has_no_triplicates(T). 
+
+%the above predicate sends a true incase the list has no triplicates. (although it also sends a false after if we don't stop the execution on one output. )
+
